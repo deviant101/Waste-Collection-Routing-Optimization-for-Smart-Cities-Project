@@ -17,8 +17,8 @@ int main(){
     read_driver_data(driversFile,drivers);
     driversFile.close();
 
-    for(int i=0; i<5; ++i)
-        drivers[i].Profile();
+    // for(int i=0; i<5; ++i)
+    //     drivers[i].Profile();
 //----------------------------------------------------------------//Bin Fill Levels Data
     int binsHourlyData[72];
     fstream binFile;
@@ -26,16 +26,17 @@ int main(){
     read_bin_data(binFile,binsHourlyData);
     binFile.close();
 
-    for(int i=0; i<72; ++i)
-        cout<<i<<" - "<<binsHourlyData[i]<<endl;
+    // for(int i=0; i<72; ++i)
+    //     cout<<i<<" - "<<binsHourlyData[i]<<endl;
 //----------------------------------------------------------------//Controller
     Controller controller;
-    controller.Profile();
+    // controller.Profile();
 //----------------------------------------------------------------Locations(Vertices)
     
     Graph graph1;
     graph1.make_graph("Vertices.csv");
-    graph1.Display_Graph();
+    graph1.findShortestPath(1,12);
+    // graph1.Display_Graph();
     
 
     return 0;
