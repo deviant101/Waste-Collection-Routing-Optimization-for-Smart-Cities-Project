@@ -9,7 +9,7 @@ class Driver{
         string Password;
         bool collection_status;
 
-    void Display(){
+    void Profile(){
         cout<<"\n--------------[Driver Profile]--------------\n";
         cout<<"NAME: "<<Name<<endl
             <<"Truck_no: "<<Truck_no<<endl
