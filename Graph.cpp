@@ -1,8 +1,10 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <limits.h>
 #include <vector>
+#include <time.h>
 using namespace std;
 
 class Graph{
@@ -10,6 +12,8 @@ class Graph{
         const int NO_OF_VERTICES;
         int **Vertices_Graph;
         string Locations_Name[13];
+        int binLevels[11];
+        vector<int> collectibleBins;        //to store collectible bins
 
         Graph():NO_OF_VERTICES(13){
             Vertices_Graph = new int*[NO_OF_VERTICES];
@@ -52,6 +56,47 @@ class Graph{
                 }
             }
             file.close();
+            // binsData();
+        }
+
+        void binsData(){
+
+            int binsHourlyData[72];
+            fstream binFile;
+            binFile.open("Bin-Data.csv",ios::in);
+
+            for(int i=0; i<72; i++){
+                
+                string percent;
+                getline(binFile,percent);
+                binsHourlyData[i]=stoi(percent);
+            }
+            binFile.close();
+
+            vector<int> bin;
+            srand(time(NULL));
+            for(int i=1; i<11; ++i){
+
+                int index = 1+rand()%72;
+                bool exist=false;
+                for(int j=0; j<bin.size(); ++j){
+                    if(index==bin[j]){
+                        exist=true;
+                        break;
+                    }
+                }
+                if(!exist){
+                    binLevels[i]=binsHourlyData[index];
+                    bin.push_back(index);
+                }
+                else
+                    --i;
+            }
+
+            cout<<"\n---------------[FILL LEVELS]---------------\n\n";
+            for(int i=1,j=2; i<11; ++i,++j)
+                cout<<Locations_Name[j]<<"  =  "<<binLevels[i]<<" %"<<endl;
+
         }
 
         void findShortestPath(int src, int dest){

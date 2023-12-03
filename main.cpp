@@ -7,7 +7,6 @@
 using namespace std;
 
 void read_driver_data(fstream &file, Driver Drivers[5]);
-void read_bin_data(fstream &binFile,int binsHourlyData[72]);
 
 int main(){
 //----------------------------------------------------------------//Drivers Data
@@ -17,27 +16,38 @@ int main(){
     read_driver_data(driversFile,drivers);
     driversFile.close();
 
-    // for(int i=0; i<5; ++i)
-    //     drivers[i].Profile();
-//----------------------------------------------------------------//Bin Fill Levels Data
-    int binsHourlyData[72];
-    fstream binFile;
-    binFile.open("Bin-Data.csv",ios::in);
-    read_bin_data(binFile,binsHourlyData);
-    binFile.close();
+//----------------------------------------------------------------//Graphs
+    Graph graphs[5];
+    graphs[0].make_graph("Area_1.csv");
+    graphs[0].findShortestPath(1,12);
+    // graph[1].Display_Graph();
 
-    // for(int i=0; i<72; ++i)
-    //     cout<<i<<" - "<<binsHourlyData[i]<<endl;
 //----------------------------------------------------------------//Controller
-    Controller controller;
-    // controller.Profile();
-//----------------------------------------------------------------Locations(Vertices)
-    
-    Graph graph1;
-    graph1.make_graph("Vertices.csv");
-    graph1.findShortestPath(1,12);
-    // graph1.Display_Graph();
-    
+    Controller controller(drivers,graphs);
+//------------------Simulation----------------------//
+    while(1){
+        int choice;
+        cout<<"\n--------------[SIMULATION MENU]--------------\n\n";
+        cout<<"1 - Login as Controller"<<endl
+            <<"2 - Login as Truck Driver"<<endl
+            <<"3 - Exit"<<endl;
+        cout<<"\nChoice : ";
+        cin>>choice;
+        cin.ignore();
+        cout<<endl;
+        if(choice==1){
+            controller.Login();
+        }
+        else if(choice==2){
+            
+        }
+        else if(choice==3){
+            break;
+        }
+        else{
+            cout<<"\nInvalid! Try again."<<"\n\n";
+        }
+    }
 
     return 0;
 }
@@ -73,15 +83,5 @@ void read_driver_data(fstream &file, Driver Drivers[5]){
                 ++comma_count;
             }
         }
-    }
-}
-
-void read_bin_data(fstream &file,int binsData[72]){
-
-    for(int i=0; i<72; i++){
-        
-        string percent;
-        getline(file,percent);
-        binsData[i]=stoi(percent);
     }
 }
