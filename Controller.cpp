@@ -137,4 +137,61 @@ class Controller{
         cout<<"------------------------------------------------\n";
     }
 
+    //----------------------------------------------------------------//
+    void driverLogin(){
+        cout<<"--------------[CONTROLLER LOGIN]--------------\n\n";
+        int driverIndex = -1;
+        while(1){
+
+            string id="";
+            cout<<"Enter Driver ID : ";
+            getline(cin,id);
+            for(int i=0;i<5; ++i){
+                if(id==drivers[i].ID){
+                    driverIndex = i;
+                    break;
+                }
+            }
+            if(driverIndex == -1)
+                cout<<"\nInvalid ID! Try again."<<"\n\n";
+            else
+                break;
+        }
+        while(1){
+            string pass="";
+            cout<<"Enter Password : ";
+            getline(cin,pass);
+            if(pass!=drivers[driverIndex].Password)
+                cout<<"\nInvalid Password! Try again."<<"\n\n";
+            else{
+                cout<<"\nSuccessfully Logged in as "<<drivers[driverIndex].Name<<endl;
+                break;
+            }
+        }
+        driverMenu(driverIndex);
+    }
+
+    void driverMenu(int driverIndex){
+        while (1){
+            cout<<"\n--------------[Driver MENU]--------------\n\n";
+            cout<<"1 - Check Duty Status"<<endl
+                <<"2 - Check Route"<<endl
+                <<"3 - Exit"<<endl;
+            int choice;
+            cout<<"\nChoice : ";
+            cin>>choice;
+            if(choice==1){
+                drivers[driverIndex].checkCollectionStatus();
+            }
+            else if(choice==2){
+                drivers[driverIndex].viewCollectionRoute();
+            }
+            else if(choice==3)
+                break;
+            else
+                break;
+        }
+        
+    }
+
 };
