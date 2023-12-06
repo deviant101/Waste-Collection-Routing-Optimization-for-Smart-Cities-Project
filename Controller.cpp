@@ -78,7 +78,7 @@ class Controller{
             cout<<"Enter Area (1-5) : ";
             cin>>areaNo;
             if(areaNo>=1 && areaNo<=5){
-                Graphs[0].binsData();
+                Graphs[areaNo].binsData();
                 break;
             }
             else{
@@ -106,7 +106,7 @@ class Controller{
         int areaNo;
         while(1){
             cout<<"\n--------------[Set Collectible Bins]--------------\n\n";
-            cout<<"Enter Area to set Collectible Bins : ";
+            cout<<"Enter Area to set Collectible Bins (1-5) : ";
             cin>>areaNo;
             if(areaNo>=1 && areaNo<=5){
                 break;
@@ -116,17 +116,26 @@ class Controller{
             }
         }
         drivers[areaNo].collection_status = true;
-        cout<<"\nBins Collection Notification sent to Area "<<areaNo<<" Truck Driver Successfully"<<endl;
-        // cout<<"Here============"<<Graphs[areaNo-1].Locations_Name[5]<<endl;
-
-        Graphs[areaNo-1].collectibleBins.clear();
-        for(int i=2; i<12; ++i)
-            if(Graphs[areaNo-1].binLevels[i]>=threshold){
-                Graphs[areaNo-1].collectibleBins.push_back(i);
-            }        
-
-        for(int i=1; i<Graphs[areaNo-1].collectibleBins.size(); ++i)
-            cout<<Graphs[areaNo-1].Locations_Name[i]<<endl;
+        cout<<"\nBins Collection Notification sent to Area "<<areaNo<<" Truck Driver Successfully\n"<<endl;
+        // cout<<"Start: "<<Graphs[areaNo].Locations_Name[1]<<"\tDump: "<<Graphs[areaNo].Locations_Name[12]<<endl;
+        for(int i=1; i<=10; ++i){
+            // cout<<Graphs[areaNo].binLevels[i]<<" - ";
+            if(Graphs[areaNo].binLevels[i]>=threshold)
+                cout<<Graphs[areaNo].Locations_Name[i+1]<<endl;
+            // cout<<endl;
+        }
+/*
+        Graphs[areaNo].collectibleBins.clear();
+        for(int i=2; i<=11; ++i)
+            if(Graphs[areaNo].binLevels[i]>=threshold){
+                Graphs[areaNo].collectibleBins.push_back(i);
+            }
+        
+        //will use heap after allocating bin and put that vector of bins in driver's collection vector
+        //will implement heap on the basis of filled percentage or one's that are near trunk departure point
+        for(int i=1; i<Graphs[areaNo].collectibleBins.size(); ++i)
+            cout<<Graphs[areaNo].Locations_Name[i]<<endl;
+*/
     }
 
     void Profile(){
@@ -145,7 +154,8 @@ class Controller{
 
             string id="";
             cout<<"Enter Driver ID : ";
-            getline(cin,id);
+            // getline(cin,id);
+            id=="22i-1669";
             for(int i=0;i<5; ++i){
                 if(id==drivers[i].ID){
                     driverIndex = i;
@@ -160,7 +170,8 @@ class Controller{
         while(1){
             string pass="";
             cout<<"Enter Password : ";
-            getline(cin,pass);
+            // getline(cin,pass);
+            pass="tyk465";
             if(pass!=drivers[driverIndex].Password)
                 cout<<"\nInvalid Password! Try again."<<"\n\n";
             else{

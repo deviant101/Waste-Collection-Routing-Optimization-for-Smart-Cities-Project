@@ -10,15 +10,15 @@ using namespace std;
 class Graph{
     public:
         const int NO_OF_VERTICES;
-        int **Vertices_Graph;
+        int **graphVertices;
         string Locations_Name[13];
         int binLevels[11];
         vector<int> collectibleBins;        //to store collectible bins
 
         Graph():NO_OF_VERTICES(13){
-            Vertices_Graph = new int*[NO_OF_VERTICES];
+            graphVertices = new int*[NO_OF_VERTICES];
             for(int i=0; i<NO_OF_VERTICES; ++i){
-                Vertices_Graph[i] = new int[NO_OF_VERTICES];
+                graphVertices[i] = new int[NO_OF_VERTICES];
             }
         }
 
@@ -47,8 +47,8 @@ class Graph{
                             // cout<<vertex<<" "<<Locations_Name[vertex]<<endl;
                         }
                         else if(comma_count>=1){
-                            Vertices_Graph[vertex][x_axis++]=stoi(sub_part);
-                            // cout<<Vertices_Graph[vertex][x_axis-1]<<endl;
+                            graphVertices[vertex][x_axis++]=stoi(sub_part);
+                            // cout<<graphVertices[vertex][x_axis-1]<<endl;
                         }
                         sub_part="";
                         ++comma_count;
@@ -61,11 +61,11 @@ class Graph{
 
         void binsData(){
 
-            int binsHourlyData[72];
+            int binsHourlyData[73];
             fstream binFile;
             binFile.open("Bin-Data.csv",ios::in);
 
-            for(int i=0; i<72; i++){
+            for(int i=1; i<=72; i++){
                 
                 string percent;
                 getline(binFile,percent);
@@ -75,7 +75,7 @@ class Graph{
 
             vector<int> bin;
             srand(time(NULL));
-            for(int i=1; i<11; ++i){
+            for(int i=1; i<=10; ++i){
 
                 int index = 1+rand()%72;
                 bool exist=false;
@@ -94,20 +94,20 @@ class Graph{
             }
 
             cout<<"\n---------------[FILL LEVELS]---------------\n\n";
-            for(int i=1,j=2; i<11; ++i,++j)
+            for(int i=1,j=2; i<=10; ++i,++j)
                 cout<<Locations_Name[j]<<"  =  "<<binLevels[i]<<" %"<<endl;
 
         }
 
         void findShortestPath(int src, int dest){
-            dijkstra(Vertices_Graph, src, dest, NO_OF_VERTICES);
+            dijkstra(graphVertices, src, dest, NO_OF_VERTICES);
         }
 
         void Display_Graph(){
             for(int i=1; i<NO_OF_VERTICES; ++i){
                 cout<<Locations_Name[i]<<" = ";
                 for(int j=1; j< NO_OF_VERTICES; ++j){
-                    cout<<Vertices_Graph[i][j]<<" ";
+                    cout<<graphVertices[i][j]<<" ";
                 }
                 cout<<endl;
             }

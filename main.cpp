@@ -10,15 +10,19 @@ void read_driver_data(fstream &file, Driver Drivers[5]);
 
 int main(){
 //----------------------------------------------------------------//Drivers Data
-    Driver drivers[5];
+    Driver drivers[6];
     fstream driversFile;
     driversFile.open("Truck-Drivers-Data.csv",ios::in);
     read_driver_data(driversFile,drivers);
     driversFile.close();
 
 //----------------------------------------------------------------//Graphs
-    Graph graphs[5];
-    graphs[0].make_graph("Area_1.csv");
+    Graph graphs[6];
+    graphs[1].make_graph("Area_1.csv");
+    graphs[2].make_graph("Area_2.csv");
+    graphs[3].make_graph("Area_3.csv");
+    graphs[4].make_graph("Area_4.csv");
+    graphs[5].make_graph("Area_5.csv");
     // graphs[0].findShortestPath(1,12);
     // graph[1].Display_Graph();
 
@@ -57,7 +61,7 @@ void read_driver_data(fstream &file, Driver Drivers[5]){
     string line="";
     getline(file,line);
 
-    for(int driver_no=0; driver_no<5; driver_no++){
+    for(int driver_no=1; driver_no<=5; driver_no++){
         line="";
         getline(file,line);
         // cout<<line<<endl;
