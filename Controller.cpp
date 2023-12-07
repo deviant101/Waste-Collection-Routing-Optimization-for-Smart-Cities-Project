@@ -167,14 +167,24 @@ class Controller{
                 cout<<"Invalid Area! Try again."<<"\n\n";
             }
         }
-        for(int i=0; i<Graphs[areaNo].collectibleBins.size(); ++i){
-            cout<<Graphs[areaNo].collectibleBins[i]<<endl;
+        if(Graphs[areaNo].collectibleBins.size()>0){
+            for(int i=0; i<Graphs[areaNo].collectibleBins.size(); ++i){
+                cout<<Graphs[areaNo].collectibleBins[i]<<" ";
+            }
+            cout<<endl;
+
+            // drivers[areaNo].routeLocations();
+            Graphs[areaNo].findShortestPath(1,Graphs[areaNo].collectibleBins[0]);
+            for(int i=0; i<Graphs[areaNo].collectibleBins.size()-1; ++i){
+                int src, dest;
+                    src = Graphs[areaNo].collectibleBins[i];
+                    dest = Graphs[areaNo].collectibleBins[i+1];
+                    Graphs[areaNo].findShortestPath(src,dest);
+            }
+            Graphs[areaNo].findShortestPath(Graphs[areaNo].collectibleBins[Graphs[areaNo].collectibleBins.size()-1],12);
         }
-        for(int i=0; Graphs[areaNo].collectibleBins.size()-1; ++i){
-            int src = Graphs[areaNo].collectibleBins[i];
-            int dest = Graphs[areaNo].collectibleBins[i+1];
-            cout<<src<<" - "<<dest<<endl;
-            Graphs[areaNo].findShortestPath(src,dest);
+        else{
+            cout<<"\nThere are no Collectible bins available\n"<<endl;
         }
     }
 
