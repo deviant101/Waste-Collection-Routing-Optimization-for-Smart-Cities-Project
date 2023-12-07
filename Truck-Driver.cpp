@@ -45,26 +45,32 @@ class Driver{
             starting_time = time(nullptr);
         }
 
-        void ViewLive(){
-        time_t current_time = time(nullptr);
-        time_t temp_starting_time = starting_time;
+        void ViewLive() {
+            time_t current_time = time(nullptr);
+            time_t temp_starting_time = starting_time;
 
-        while (temp_starting_time <= current_time && !routeTime.empty()) {
-            if (temp_starting_time + routeTime[0] < current_time) {
-                collectionTimes.push_back(temp_starting_time + routeTime[0]);
-                routeTime.erase(routeTime.begin());
-                collectedBins.push_back(routeLocations[0]);
-                routeLocations.erase(routeLocations.begin());
+            while (!routeTime.empty()) {
+                if (temp_starting_time + routeTime[0] <= current_time) {
+                    collectionTimes.push_back(temp_starting_time + routeTime[0]);
+                    collectedBins.push_back(routeLocations[0]);
+
+                    routeTime.erase(routeTime.begin());
+                    routeLocations.erase(routeLocations.begin());
+                } else {
+                    // If the time for the next bin has not arrived, break the loop
+                    break;
+                }
+
+                temp_starting_time += collectionTimes.back();  // Update temp_starting_time for the next iteration
             }
 
-            temp_starting_time += routeTime.empty() ? 0 : routeTime[0];
+            // Print collected bins
+            for (size_t i = 0; i < collectionTimes.size(); ++i) {
+                struct tm* local_time = localtime(&collectionTimes[i]);
+                cout<<collectedBins[i]<<" Bin Collected at "<<local_time->tm_min<<":"<<local_time->tm_sec<<endl;
+            }
         }
 
-        for (size_t i = 0; i < collectionTimes.size(); ++i){
-            struct tm* local_time = localtime(&collectionTimes[i]);
-            cout << collectedBins[i] << " Bin Collected at "<< local_time->tm_min<<" : "<<local_time->tm_sec<< endl;
-        }
-    }
 
         void Profile(){
             cout<<"\n--------------[Driver Profile]--------------\n";
