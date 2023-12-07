@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <ctime>
 #include "Truck-Driver.cpp"
 #include "Graph.cpp"
 using namespace std;
@@ -14,7 +15,11 @@ class Controller{
         int threshold;
     
     Controller(Driver *driverPtr, Graph *graphs, int Thres=75, string name="Dennis", string id="CRL-1094", string password="cont_41siml")
-        :Name(name), ID(id), Password(password),drivers(driverPtr), Graphs(graphs), threshold(Thres){}
+        :Name(name), ID(id), Password(password),drivers(driverPtr), Graphs(graphs), threshold(Thres){
+            for(int i=1; i<=5; ++i){
+                drivers[i].BinLevels=Graphs[i].binLevels;
+            }
+        }
 
     void Login(){
         cout<<"--------------[CONTROLLER LOGIN]--------------\n\n";
@@ -46,13 +51,17 @@ class Controller{
     }
 
     void Menu(){
+        for(int i=1; i<=5; ++i)
+            Graphs[i].binsData();
         while(1){
             cout<<"\n--------------[CONTROLLER MENU]--------------\n\n";
             cout<<"1 - Bin Fill Data"<<endl
                 <<"2 - Set Collection Threshold"<<endl
                 <<"3 - Set Colletible Bins"<<endl
                 <<"4 - Allot Route to Truck Driver"<<endl
-                <<"5 - Exit"<<endl;
+                <<"5 - Check bin fill Notifications"<<endl
+                <<"6 - Live Tracking of Trucks"<<endl
+                <<"7 - Exit"<<endl;
             int choice;
             cout<<"\nChoice: ";
             cin>>choice;
@@ -70,15 +79,22 @@ class Controller{
             else if(choice==4){
                 makeRouteForDriver();
             }
-            else if(choice==5)
+            else if(choice==5){
+                checkNotifications();
+            }
+            else if(choice==6){
+                LiveTracking();
+            }
+            else if(choice==7)
                 break;
         }
     }
 
     void view_bin_fill_level(){
         cout<<"\n--------------[BIN FILL LEVELS]--------------\n\n";
+        int areaNo;
         while(1){
-            int areaNo=0;
+            areaNo=0;
             cout<<"Enter Area (1-5) : ";
             cin>>areaNo;
             if(areaNo>=1 && areaNo<=5){
@@ -89,6 +105,31 @@ class Controller{
                 cout<<"Invalid Area! Try again."<<"\n\n";
             }
         }
+        cout<<"\n---------------[FILL LEVELS]---------------\n\n";
+            for(int i=2; i<=11; ++i)
+                cout<<Graphs[areaNo].Locations_Name[i]<<"  =  "<<Graphs[areaNo].binLevels[i]<<" %"<<endl;
+    }
+
+    void LiveTracking(){
+        cout<<"\n--------------[Live Tracking]--------------\n\n";
+        int areaNo;
+        while(1){
+            areaNo=0;
+            cout<<"Enter Area (1-5) : ";
+            cin>>areaNo;
+            if(areaNo>=1 && areaNo<=5){
+                Graphs[areaNo].binsData();
+                break;
+            }
+            else{
+                cout<<"Invalid Area! Try again."<<"\n\n";
+            }
+        }
+        if(drivers[areaNo].collectedBins.empty()){
+            cout<<"\nDriver did not started collecting bins\n"<<endl;
+            return;
+        }
+        drivers[areaNo].ViewLive();
     }
 
     void setColletionThreshold(){
@@ -188,6 +229,18 @@ class Controller{
         }
     }
 
+    void checkNotifications(){
+        cout<<"\n--------------[Bin Fill Notifications]--------------\n";
+        for(int i=1; i<=5; ++i){
+            cout<<"Area - "<<i<<endl;
+            for(int j=2; j<=11; ++j){
+                if(Graphs[i].binLevels[j] > threshold)
+                    cout<<Graphs[i].Locations_Name[j]<<endl;
+            }
+            cout<<"\n";
+        }
+        cout<<"\n------------------------------------------------------\n";
+    }
 
     void Profile(){
         cout<<"\n--------------[Controller Profile]--------------\n";
@@ -234,21 +287,33 @@ class Controller{
     }
 
     void driverMenu(int driverIndex){
+        
         while (1){
             cout<<"\n--------------[Driver MENU]--------------\n\n";
             cout<<"1 - Check Duty Status"<<endl
                 <<"2 - Check Route"<<endl
-                <<"3 - Exit"<<endl;
+                <<"3 - Start Collecting"<<endl
+                <<"4 - Live Tracking"<<endl
+                <<"5 - Exit"<<endl;
             int choice;
             cout<<"\nChoice : ";
             cin>>choice;
+            if(drivers[driverIndex].routeLocations.empty()){
+                drivers[driverIndex].collection_status=false;
+            }
             if(choice==1){
                 drivers[driverIndex].checkCollectionStatus();
             }
             else if(choice==2){
                 drivers[driverIndex].viewCollectionRoute();
             }
-            else if(choice==3)
+            else if(choice==3){
+                drivers[driverIndex].startCollecting();
+            }
+            else if(choice==4){
+                drivers[driverIndex].ViewLive();
+            }
+            else if(choice==5)
                 break;
             else
                 break;

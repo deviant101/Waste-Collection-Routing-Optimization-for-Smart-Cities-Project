@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <ctime>
 using namespace std;
 
 class Driver{
@@ -10,9 +11,13 @@ class Driver{
         string ID;
         string Password;
         bool collection_status;
+        int *BinLevels;
         vector<string> routeLocations;
         vector<int> routeIndexes;
         vector<int> routeTime;
+        time_t starting_time;
+        vector<time_t> collectionTimes;
+        vector<string> collectedBins;
 
 
         Driver():collection_status(false) {}
@@ -26,12 +31,40 @@ class Driver{
 
         void viewCollectionRoute(){
 
-            int i = 0;
-            for(i; i<routeLocations.size()-1; ++i)
-                cout<<" ( "<<routeLocations[i]<<" ) "<<"->";
-            cout<<" ( "<<routeLocations[i]<<" ) "<<endl;
-
+            if(!routeLocations.empty()){
+                int i = 0;
+                for(i; i<routeLocations.size()-1; ++i)
+                    cout<<" ( "<<routeLocations[i]<<" ) "<<"->";
+                cout<<" ( "<<routeLocations[i]<<" ) "<<endl;
+            }
+            else
+                cout<<"\nNo Route Alloted\n"<<endl;
         }
+
+        void startCollecting(){
+            starting_time = time(nullptr);
+        }
+
+        void ViewLive(){
+        time_t current_time = time(nullptr);
+        time_t temp_starting_time = starting_time;
+
+        while (temp_starting_time <= current_time && !routeTime.empty()) {
+            if (temp_starting_time + routeTime[0] < current_time) {
+                collectionTimes.push_back(temp_starting_time + routeTime[0]);
+                routeTime.erase(routeTime.begin());
+                collectedBins.push_back(routeLocations[0]);
+                routeLocations.erase(routeLocations.begin());
+            }
+
+            temp_starting_time += routeTime.empty() ? 0 : routeTime[0];
+        }
+
+        for (size_t i = 0; i < collectionTimes.size(); ++i){
+            struct tm* local_time = localtime(&collectionTimes[i]);
+            cout << collectedBins[i] << " Bin Collected at "<< local_time->tm_min<<" : "<<local_time->tm_sec<< endl;
+        }
+    }
 
         void Profile(){
             cout<<"\n--------------[Driver Profile]--------------\n";

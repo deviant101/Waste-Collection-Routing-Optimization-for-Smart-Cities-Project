@@ -93,10 +93,6 @@ class Graph{
                     --i;
             }
 
-            cout<<"\n---------------[FILL LEVELS]---------------\n\n";
-            for(int i=2; i<=11; ++i)
-                cout<<Locations_Name[i]<<"  =  "<<binLevels[i]<<" %"<<endl;
-
         }
 
         void findShortestPath(int src, int dest, Driver &driver){
