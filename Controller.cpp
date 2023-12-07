@@ -14,7 +14,7 @@ class Controller{
         int threshold;
     
     Controller(Driver *driverPtr, Graph *graphs, int Thres=75, string name="Dennis", string id="CRL-1094", string password="cont_41siml")
-        :Name(name), ID(id), Password(password),drivers(driverPtr), Graphs(graphs), threshold(Thres) {}
+        :Name(name), ID(id), Password(password),drivers(driverPtr), Graphs(graphs), threshold(Thres){}
 
     void Login(){
         cout<<"--------------[CONTROLLER LOGIN]--------------\n\n";
@@ -173,15 +173,15 @@ class Controller{
             }
             cout<<endl;
 
-            // drivers[areaNo].routeLocations();
-            Graphs[areaNo].findShortestPath(1,Graphs[areaNo].collectibleBins[0]);
+
+            Graphs[areaNo].findShortestPath(1,Graphs[areaNo].collectibleBins[0], drivers[areaNo]);
             for(int i=0; i<Graphs[areaNo].collectibleBins.size()-1; ++i){
                 int src, dest;
                     src = Graphs[areaNo].collectibleBins[i];
                     dest = Graphs[areaNo].collectibleBins[i+1];
-                    Graphs[areaNo].findShortestPath(src,dest);
+                    Graphs[areaNo].findShortestPath(src, dest, drivers[areaNo]);
             }
-            Graphs[areaNo].findShortestPath(Graphs[areaNo].collectibleBins[Graphs[areaNo].collectibleBins.size()-1],12);
+            Graphs[areaNo].findShortestPath(Graphs[areaNo].collectibleBins[Graphs[areaNo].collectibleBins.size()-1], 12, drivers[areaNo]);
         }
         else{
             cout<<"\nThere are no Collectible bins available\n"<<endl;

@@ -11,6 +11,9 @@ class Driver{
         string Password;
         bool collection_status;
         vector<string> routeLocations;
+        vector<int> routeIndexes;
+        vector<int> routeTime;
+
 
         Driver():collection_status(false) {}
 
@@ -23,9 +26,10 @@ class Driver{
 
         void viewCollectionRoute(){
 
-            for(int i=0; i<routeLocations.size(); ++i){
-                
-            }
+            int i = 0;
+            for(i; i<routeLocations.size()-1; ++i)
+                cout<<" ( "<<routeLocations[i]<<" ) "<<"->";
+            cout<<" ( "<<routeLocations[i]<<" ) "<<endl;
 
         }
 
