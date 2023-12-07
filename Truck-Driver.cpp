@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class Driver{
@@ -9,6 +10,7 @@ class Driver{
         string ID;
         string Password;
         bool collection_status;
+        vector<string> routeLocations;
 
         Driver():collection_status(false) {}
 
@@ -20,6 +22,10 @@ class Driver{
         }
 
         void viewCollectionRoute(){
+
+            for(int i=0; i<routeLocations.size(); ++i){
+                
+            }
 
         }
 

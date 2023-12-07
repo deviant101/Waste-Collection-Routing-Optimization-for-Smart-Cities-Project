@@ -12,7 +12,7 @@ class Graph{
         const int NO_OF_VERTICES;
         int **graphVertices;
         string Locations_Name[13];
-        int binLevels[11];
+        int binLevels[12];
         vector<int> collectibleBins;        //to store collectible bins
 
         Graph():NO_OF_VERTICES(13){
@@ -75,7 +75,7 @@ class Graph{
 
             vector<int> bin;
             srand(time(NULL));
-            for(int i=1; i<=10; ++i){
+            for(int i=2; i<=11; ++i){
 
                 int index = 1+rand()%72;
                 bool exist=false;
@@ -94,8 +94,8 @@ class Graph{
             }
 
             cout<<"\n---------------[FILL LEVELS]---------------\n\n";
-            for(int i=1,j=2; i<=10; ++i,++j)
-                cout<<Locations_Name[j]<<"  =  "<<binLevels[i]<<" %"<<endl;
+            for(int i=2; i<=11; ++i)
+                cout<<Locations_Name[i]<<"  =  "<<binLevels[i]<<" %"<<endl;
 
         }
 
@@ -156,13 +156,13 @@ class Graph{
             cout << "Shortest distance from " << src << " to " << dest << " is: " << distance[dest]<<endl;
         }*/
 
-        void dijkstra(int **graph, int src, int dest, int vertices) {
+        void dijkstra(int **graph, int src, int dest, int vertices){
             int distance[13];
             int predecessor[13];  // To store the predecessor of each vertex in the shortest path
             bool visited[13];
 
             // Initialize distance array, predecessor array, and visited array
-            for (int i = 1; i < vertices; i++) {
+            for (int i = 1; i < vertices; i++){
                 distance[i] = INT_MAX;
                 predecessor[i] = -1;  // Initialize predecessors to -1
                 visited[i] = false;
@@ -172,12 +172,12 @@ class Graph{
             distance[src] = 0;
 
             // Find shortest path for all vertices
-            for (int count = 1; count < vertices; count++) {
+            for(int count = 1; count < vertices; count++){
                 // Find the minimum distance vertex from the set of vertices not yet processed
                 int minDistance = INT_MAX, minIndex;
 
-                for (int v = 1; v < vertices; v++) {
-                    if (!visited[v] && distance[v] <= minDistance) {
+                for(int v = 1; v < vertices; v++){
+                    if (!visited[v] && distance[v] <= minDistance){
                         minDistance = distance[v];
                         minIndex = v;
                     }
@@ -187,9 +187,8 @@ class Graph{
                 visited[minIndex] = true;
 
                 // Update distance value of the adjacent vertices of the picked vertex
-                for (int v = 1; v < vertices; v++) {
-                    if (!visited[v] && graph[minIndex][v] && distance[minIndex] != INT_MAX &&
-                        distance[minIndex] + graph[minIndex][v] < distance[v]) {
+                for(int v = 1; v < vertices; v++){
+                    if (!visited[v] && graph[minIndex][v] && distance[minIndex] != INT_MAX && distance[minIndex] + graph[minIndex][v] < distance[v]) {
                         distance[v] = distance[minIndex] + graph[minIndex][v];
                         predecessor[v] = minIndex;
                     }
@@ -203,7 +202,7 @@ class Graph{
             cout << "Path: ";
             vector<int> path;
             int currentVertex = dest;
-            while (currentVertex != -1) {
+            while(currentVertex != -1){
                 path.push_back(currentVertex);
                 currentVertex = predecessor[currentVertex];
             }
