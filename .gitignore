@@ -2,7 +2,3 @@
 
 #ignoring object/output file
 test
-
-#ignoring few source files
-Co-Pilot.cpp
-Location.cpp

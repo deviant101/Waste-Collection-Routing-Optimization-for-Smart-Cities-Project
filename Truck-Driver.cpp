@@ -42,6 +42,7 @@ class Driver{
         }
 
         void startCollecting(){
+            cout<<"\nStarted Bin Collection\n"<<endl;
             starting_time = time(nullptr);
         }
 
@@ -65,10 +66,13 @@ class Driver{
                 temp_starting_time += routeTime[0];  // Update temp_starting_time for the next iteration
             }
 
-            // Print collected bins
-            for (size_t i = 0; i < collectionTimes.size(); ++i){
+            for (size_t i = 0; i < collectionTimes.size(); ++i){        //collected
                 struct tm* local_time = localtime(&collectionTimes[i]);
                 cout << collectedBins[i] << " Bin Collected at " << local_time->tm_min << ":" << local_time->tm_sec << endl;
+            }
+            cout<<"\nRemaining Bins\n";
+            for(int i=0; i<routeLocations.size(); ++i){         //remaining
+                cout<<routeLocations[i]<<endl;
             }
         }
 

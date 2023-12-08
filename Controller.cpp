@@ -162,6 +162,8 @@ class Controller{
         }
 
         Graphs[areaNo].collectibleBins.clear();
+        drivers[areaNo].collectedBins.clear();
+        drivers[areaNo].collectionTimes.clear();
         for(int i=2; i<=11; ++i){
             if(Graphs[areaNo].binLevels[i]>=threshold){
                 Graphs[areaNo].collectibleBins.push_back(i);
