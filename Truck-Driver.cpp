@@ -49,25 +49,26 @@ class Driver{
             time_t current_time = time(nullptr);
             time_t temp_starting_time = starting_time;
 
-            while (!routeTime.empty()) {
-                if (temp_starting_time + routeTime[0] <= current_time) {
+            while (!routeTime.empty()){
+                if (temp_starting_time + routeTime[0] <= current_time){
                     collectionTimes.push_back(temp_starting_time + routeTime[0]);
                     collectedBins.push_back(routeLocations[0]);
-
                     routeTime.erase(routeTime.begin());
                     routeLocations.erase(routeLocations.begin());
-                } else {
-                    // If the time for the next bin has not arrived, break the loop
-                    break;
-                }
 
-                temp_starting_time += collectionTimes.back();  // Update temp_starting_time for the next iteration
+                    starting_time = temp_starting_time + routeTime[0];
+
+                }
+                else
+                    break;
+
+                temp_starting_time += routeTime[0];  // Update temp_starting_time for the next iteration
             }
 
             // Print collected bins
-            for (size_t i = 0; i < collectionTimes.size(); ++i) {
+            for (size_t i = 0; i < collectionTimes.size(); ++i){
                 struct tm* local_time = localtime(&collectionTimes[i]);
-                cout<<collectedBins[i]<<" Bin Collected at "<<local_time->tm_min<<":"<<local_time->tm_sec<<endl;
+                cout << collectedBins[i] << " Bin Collected at " << local_time->tm_min << ":" << local_time->tm_sec << endl;
             }
         }
 
