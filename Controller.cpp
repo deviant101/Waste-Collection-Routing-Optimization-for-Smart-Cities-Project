@@ -26,14 +26,14 @@ class Controller{
         while(1){
             string id="";
             cout<<"Enter ID : ";
-            // getline(cin,id);
-            id="CRL-1094";
+            getline(cin,id);
+            // id="CRL-1094";
             if(id==ID){
                 while(1){
                     string pass="";
                     cout<<"Enter Password : ";
-                    // getline(cin,pass);
-                    pass="cont_41siml";
+                    getline(cin,pass);
+                    // pass="cont_41siml";
                     if(pass==Password){
                         cout<<"\nSuccessfully Logged in as Controller\n";
                         Menu();
@@ -276,8 +276,8 @@ class Controller{
         while(1){
             string pass="";
             cout<<"Enter Password : ";
-            // getline(cin,pass);
-            pass="tyk465";
+            getline(cin,pass);
+            // pass="tyk465";
             if(pass!=drivers[driverIndex].Password)
                 cout<<"\nInvalid Password! Try again."<<"\n\n";
             else{

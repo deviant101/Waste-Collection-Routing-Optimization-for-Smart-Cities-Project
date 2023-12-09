@@ -110,47 +110,6 @@ class Graph{
         }
 
     private:
-    /*
-        void dijkstra(int **graph, int src, int dest, int maxVertices){
-            int distance[13];
-            bool visited[13];
-
-            // Initialize distance array and visited array
-            for (int i = 1; i < maxVertices; i++) {
-                distance[i] = INT_MAX;
-                visited[i] = false;
-            }
-
-            // Distance from src to itself is always 0
-            distance[src] = 0;
-
-            // Find shortest path for all vertices
-            for (int count = 1; count < maxVertices; count++) {
-                // Find the minimum distance vertex from the set of vertices not yet processed
-                int minDistance = INT_MAX, minIndex;
-
-                for (int v = 1; v < maxVertices; v++) {
-                    if (!visited[v] && distance[v] <= minDistance) {
-                        minDistance = distance[v];
-                        minIndex = v;
-                    }
-                }
-
-                // Mark the picked vertex as visited
-                visited[minIndex] = true;
-
-                // Update distance value of the adjacent vertices of the picked vertex
-                for (int v = 1; v < maxVertices; v++){
-                    if (!visited[v] && graph[minIndex][v] && distance[minIndex] != INT_MAX &&
-                        distance[minIndex] + graph[minIndex][v] < distance[v]){
-                        distance[v] = distance[minIndex] + graph[minIndex][v];
-                    }
-                }
-            }
-
-            // Print the shortest distance from src to dest
-            cout << "Shortest distance from " << src << " to " << dest << " is: " << distance[dest]<<endl;
-        }*/
 
         void dijkstra(int **graph, int src, int dest, int vertices, Driver &driver){
             int distance[13];
@@ -198,7 +157,7 @@ class Graph{
             driver.routeTime.push_back(distance[dest]);
             driver.routeLocations.push_back(Locations_Name[dest]);
             
-            //not storing other vertices in path
+            //to store parent vertices in path from src to dest
             // while(currentVertex != -1){
             //     path.push_back(currentVertex);
             //     currentVertex = vertices_in_path[currentVertex];
